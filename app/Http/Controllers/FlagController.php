@@ -20,6 +20,8 @@ class FlagController extends Controller
     | HATI-HATI!
     | Bagian paling penting dari aplikasi ini ada di sini.
     | Jangan merubah sembarangan tanpa seijin Penerus!!!
+    | 
+    | Penilaian score, last submit
     |
     */
     public function viewFormSubmit()
@@ -33,7 +35,7 @@ class FlagController extends Controller
     		->get();
 
     	//get Data Soal
-    	$soal = Soal::select('soal_id')
+    	$soal = Soal::select('soal_id','soal_poin')
     		->orderBy('soal_id','asc')
     		->get();
 
@@ -49,12 +51,16 @@ class FlagController extends Controller
     	$poinMinus= Flag::where([['team_id',$teamid],['flag_isActive','0']])->get();
 
     	$poinTotal = 0;
+        $dateSubmit = array();
+        array_push($dateSubmit,'0000-00-00 00:00:00');
     	//Generate nilai Plus
     	foreach($poinPlus as $plus){
 			$poin = Soal::select('soal_poin')
 				->where('soal_id',$plus->soal_id)
     			->first();
 
+            $curdate = strtotime($plus->flag_timestamp);
+            array_push($dateSubmit,$curdate);
     		$poinTotal = $poinTotal + $poin->soal_poin;
     	}
     	//Generate nilai Minus
@@ -86,12 +92,16 @@ class FlagController extends Controller
 	    	$poinMinus= Flag::where([['team_id',$teamid->team_id],['flag_isActive','0']])->get();
 
 	    	$poinTotal = 0;
+            $dateSubmit = array();
+            array_push($dateSubmit,'0000-00-00 00:00:00');
 	    	//Generate nilai Plus
 	    	foreach($poinPlus as $plus){
 				$poin = Soal::select('soal_poin')
 					->where('soal_id',$plus->soal_id)
 	    			->first();
 
+                $curdate = $plus->flag_timestamp;
+                array_push($dateSubmit,$curdate);
 	    		$poinTotal = $poinTotal + $poin->soal_poin;;
 	    	}
 	    	//Generate nilai Minus
@@ -103,9 +113,15 @@ class FlagController extends Controller
 	    		$poinTotal = $poinTotal - $poin->soal_poin;;
 	    	}
 
-	    	$allPoin[$count] = $poinTotal;
+            $allPoin[$count] = ['teamid' => $teamid->team_id , 'username' => $teamid->team_username , 'poin' => $poinTotal, 'last_submit' => max($dateSubmit)];
 	    	$count = $count+1;
 		}
+
+        // Pass the array, followed by the column names and sort flags
+        $poin  = array_column($allPoin, 'poin');
+        $lsubmit  = array_column($allPoin, 'last_submit');
+
+        array_multisort($poin, SORT_DESC, $lsubmit, SORT_ASC, $allPoin);
 		return $allPoin;
     }
 
@@ -135,6 +151,13 @@ class FlagController extends Controller
     	$soalid = $request->input('soal');
     	$inputflag = $request->input('input_flag');
     	
+        //Check input teamnya sendiri
+        $myid = Auth::user()->team_id;
+        if($myid == $teamid){
+            $msg = 'Tidak boleh input flag team sendiri!';
+            return redirect()->route('error')->with(['msg' => $msg]);
+        }
+
     	$flag = Flag::where([['team_id',$teamid],['soal_id',$soalid],['flag_text',$inputflag]])->first();
     	
     	if(!$flag){
