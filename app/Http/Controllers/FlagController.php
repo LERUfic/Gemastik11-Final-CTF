@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Flag;
 use App\User;
 use App\Soal;
+use App\Game;
 use Illuminate\Support\Facades\DB;
 
 class FlagController extends Controller
@@ -184,6 +185,11 @@ class FlagController extends Controller
     		return redirect()->route('flag.game');
     }
 
+    public function viewScore()
+    {
+        return view('admin/scoreboard');
+    }
+
 
     /*
     |--------------------------------------------------------------------------
@@ -205,6 +211,45 @@ class FlagController extends Controller
         $status = $soal->save();
 
         return redirect()->route('soal.form');
+    }
+
+    public function gameStart(Request $request){
+       $gameflag = Game::select('config_id','gvalue')
+                    ->where([['gvalue','1'],['config_id','1']])
+                    ->orWhere([['gvalue','0'],['config_id','1']])
+                    ->first();
+        if(!$gameflag){
+            $gflag = new Game();
+            $gflag->gvalue = '1';
+            $status = $gflag->save();
+        }
+        else{
+            $gameflag->gvalue = '1';
+            $gameflag->save();
+
+        }
+                    
+        return redirect()->route('admin.dashboard');
+    }
+
+    public function gameStop(Request $request){
+       $gameflag = Game::select('config_id','gvalue')
+                    ->where([['gvalue','1'],['config_id','1']])
+                    ->orWhere([['gvalue','0'],['config_id','1']])
+                    ->first();
+
+        if(!$gameflag){
+            $gflag = new Game();
+            $gflag->gvalue = '0';
+            $status = $gflag->save();
+        }
+        else{
+            //return $gameflag;
+            $gameflag->gvalue = '0';
+            $gameflag->save();   
+        }
+                    
+        return redirect()->route('admin.dashboard');
     }
 
 }

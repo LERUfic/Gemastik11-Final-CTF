@@ -19,6 +19,10 @@ Route::get('/logout', 'LoginController@doLogout')->name('login.logout');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+//Setelah buat satu akun admin matikan route ini
+Route::get('/register', 'LoginController@viewRegister')->name('register.view');
+Route::post('/register', 'LoginController@submitRegister')->name('register.submit');
+
 //Auth
 Route::middleware(['guest'])->group(function (){
     Route::get('/login', 'LoginController@viewLogin')->name('login.form');
@@ -43,16 +47,21 @@ Route::middleware(['auth'])->group(function (){
 			//Tambah Soal Baru
 			Route::get('/soal', 'FlagController@viewSoalForm')->name('soal.form');
 			Route::post('/soal', 'FlagController@submitSoal')->name('soal.submit');
+
+			//Game Flow
+			Route::get('/gamestart', 'FlagController@gameStart')->name('game.start');
+			Route::get('/gamestop', 'FlagController@gameStop')->name('game.stop');
     	});
 
-    	Route::get('/scoreboard', 'FlagController@getAllPoin')->name('flag.allscore');
+		Route::get('/scoreboard', 'FlagController@viewScore')->name('flag.score');
+    	Route::get('/getscore', 'FlagController@getAllPoin')->name('flag.allscore');
 	});
 
 	//Peserta
 	Route::prefix('peserta')->group(function () {
 		Route::get('/dashboard', 'HomeController@viewDashboardPeserta')->name('peserta.dashboard');
-		Route::get('/game', 'FlagController@viewFormSubmit')->name('flag.game');
-		Route::post('/game', 'FlagController@submitYourFlag')->name('flag.gamein');
+		Route::get('/game', 'FlagController@viewFormSubmit')->name('flag.game')->middleware('gconfig');
+		Route::post('/game', 'FlagController@submitYourFlag')->name('flag.gamein')->middleware('gconfig');
 
 		Route::get('/myscore', 'FlagController@getPoin')->name('flag.myscore');
 
