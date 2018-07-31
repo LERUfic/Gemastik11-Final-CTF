@@ -1,5 +1,5 @@
 @extends('layouts.base')
-@section('title', 'Dashboard Peserta')
+@section('title', 'Dashboard Admin')
 @section('contents')
 	<div class="row" style="margin-top:5%;">
 		<div class="col-md-2"></div>

@@ -21,7 +21,7 @@ class GConfig
                     ->first();
 
         if (!$gameflag) {
-            return redirect()->route('error')->with('msg', 'Game Selesai');
+            return redirect()->route('error')->with('msg', 'Game Telah Berakhir');
         }
 
         return $next($request);

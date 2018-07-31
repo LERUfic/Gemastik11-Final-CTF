@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/',function(){ return view('home'); })->name('home');
+//Route::get('/',function(){ return view('home'); })->name('home');
 
 Route::get('/error', 'HomeController@viewError')->name('error');
 
@@ -21,6 +21,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 //Auth
 Route::middleware(['guest'])->group(function (){
+	Route::get('/', 'LoginController@viewLogin')->name('home');
     Route::get('/login', 'LoginController@viewLogin')->name('login.form');
 	Route::post('/login/', 'LoginController@submitLogin')->name('login.submit');
 });

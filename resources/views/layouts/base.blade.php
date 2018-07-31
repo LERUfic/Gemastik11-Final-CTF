@@ -9,12 +9,13 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <link rel="stylesheet" href="{{ URL::asset('css/custom.min.css') }}">
+  @yield('css')
 </head>
   <body>
 	 <nav class="navbar navbar-inverse">
 	  <div class="container-fluid">
 	    <div class="navbar-header">
-	      <a class="navbar-brand" href="{{ Route('admin.dashboard') }}">Gemastik 11</a>
+	      <a class="navbar-brand" href="{{ Route('home') }}">Gemastik 11</a>
 	    </div>
 	    {{-- <ul class="nav navbar-nav">
 	      <li class="active"><a href="#">Home</a></li>
