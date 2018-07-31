@@ -4,11 +4,12 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <title>Gemastik 11 - Login</title>
+  <title>GEMASTIK 11 - Login</title>
   <link rel="stylesheet" href="{{ URL::asset('css/bootstrap.min.css') }}">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <link rel="stylesheet" href="{{ URL::asset('css/custom.min.css') }}">
+  <link rel="icon" type="image/png" href="{{ URL::asset('favicon.png') }}">>
 </head>
 {{-- <body class="skin-black-light" style="background-color:#f9f9f9;"> --}}
   <body class="skin-black-light" style="background-color:#013880;">
