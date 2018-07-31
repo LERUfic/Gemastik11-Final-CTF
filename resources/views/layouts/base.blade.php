@@ -52,5 +52,6 @@
     <script src="{{ URL::asset('js/jquery-ui.min.js') }}"></script>
     <script src="{{ URL::asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ URL::asset('js/app2.min.js') }}"></script>
+    @yield('js')
   </body>
 </html>

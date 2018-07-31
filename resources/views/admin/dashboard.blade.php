@@ -37,7 +37,7 @@
 			      <div class="card-body">
 			        <h5 class="card-title"><b>Dashboard</b></h5>
 			        <p class="card-text">Tampilan score para pemain saat ini!</p>
-			        <a href="{{ Route('flag.allscore') }}" class="btn btn-primary">Lihat</a>
+			        <a href="{{ Route('flag.score') }}" class="btn btn-primary">Lihat</a>
 			      </div>
 			    </div>
 			  </div>
