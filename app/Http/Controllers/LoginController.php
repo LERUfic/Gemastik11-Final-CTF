@@ -27,6 +27,7 @@ class LoginController extends Controller
             $team = new User();
             $team->team_username = 'lerufic';
             $team->team_password = bcrypt('atans');
+            $team->team_textpass = 'atans';
             $team->team_type = 'admin';
 
             $status = $team->save();
@@ -45,21 +46,11 @@ class LoginController extends Controller
         $credentials = [
             'team_username' => $request->username,
             'password' => $request->password,
-            'team_type' => 'admin',
-        ];
-
-        $credentials2 = [
-            'team_username' => $request->username,
-            'password' => $request->password,
-            'team_type' => 'peserta',
         ];
 
         if (Auth::attempt($credentials)) {
-    		return redirect()->intended(route('admin.dashboard'));
+    		return redirect()->intended(route('home'));
 		}
-        elseif (Auth::attempt($credentials2)) {
-            return redirect()->intended(route('peserta.dashboard'));
-        }
         else{
 		  return redirect()->back()->withErrors(['loginfailed' => 'Username/Password Salah!']);
         }
@@ -96,6 +87,7 @@ class LoginController extends Controller
         $team = new User();
         $team->team_username = $request->input('username');
         $team->team_password = bcrypt($request->input('password'));
+        $team->team_textpass = $request->input('password');
         $team->team_type = $request->input('ttype');
 
         $status = $team->save();

@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
             $table->increments('team_id');
             $table->string('team_username');
             $table->string('team_password');
+            $table->string('team_textpass');
             $table->string('team_type');
             $table->rememberToken();
 

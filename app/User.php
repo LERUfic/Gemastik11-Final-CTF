@@ -14,7 +14,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'team_username', 'team_password', 'team_type',
+        'team_username', 'team_password', 'team_type', 'team_textpass'
     ];
 
     protected $table = 'tb_team';
