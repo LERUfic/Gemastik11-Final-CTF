@@ -21,6 +21,17 @@ class LoginController extends Controller
    
     public function viewLogin()
     {
+        //generate First user
+        $jumlah = User::all()->count();
+        if(!$jumlah){
+            $team = new User();
+            $team->team_username = 'lerufic';
+            $team->team_password = bcrypt('atans');
+            $team->team_type = 'admin';
+
+            $status = $team->save();
+        }
+
     	return view('login');
     }
 

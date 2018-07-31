@@ -19,10 +19,6 @@ Route::get('/logout', 'LoginController@doLogout')->name('login.logout');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-//Setelah buat satu akun admin matikan route ini
-Route::get('/register', 'LoginController@viewRegister')->name('register.view');
-Route::post('/register', 'LoginController@submitRegister')->name('register.submit');
-
 //Auth
 Route::middleware(['guest'])->group(function (){
     Route::get('/login', 'LoginController@viewLogin')->name('login.form');
